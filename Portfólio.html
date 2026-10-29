@@ -7,7 +7,7 @@
 
 <title>Portfólio</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="./style.css">
 
 </head>
 
@@ -34,45 +34,53 @@
 
 <h1>Portfólio</h1>
 
+<section class="project-group" aria-labelledby="projetosWebTitulo">
+<h2 id="projetosWebTitulo">Desenvolvimento Web</h2>
+<div class="project-grid">
+
 <div class="card">
-
-<h2>💻 Calculadora Python</h2>
-
+<h2>📝 Sistema de Cadastro</h2>
 <p>
-Projeto utilizando operadores,
-funções e entrada de dados.
+Aplicação web desenvolvida com Node.js, Express e MySQL para cadastrar segredos por categoria.
 </p>
-   <a href="../trabalhojadson/calculadora.html" class="botao">
-        Abrir
-    </a>
-
-</div>
-
+<a href="cadastro.html" class="botao">Abrir interface</a>
+<p class="project-note">O envio dos dados requer o servidor Node.js e a conexão MySQL configurados.</p>
 </div>
 
 <div class="card">
-
-<h2>📦 Controle de Validade</h2>
-
-<p>
-Sistema para verificar produtos
-vencidos e válidos.
-</p>
-   <a href="../trabalhojadson/controle-validade.html" class="botao">
-        Abrir
-    </a>
-
-</div>
-
-<div class="card">
-
 <h2>🌐 Primeiro Site HTML</h2>
-
 <p>
-Projeto utilizando HTML e CSS.
+Página em HTML e CSS com um bloco de notas que salva as anotações no navegador.
 </p>
-   <a href="../trabalhojadson/primeiro-site.html" class="botao">Abrir</a>
+<a href="primeiro-site.html" class="botao">Abrir primeiro site</a>
 </div>
+
+</div>
+</section>
+
+<section class="project-group" aria-labelledby="projetosPythonTitulo">
+<h2 id="projetosPythonTitulo">Lógica e Python</h2>
+<div class="project-grid">
+
+<div class="card">
+<h2>💻 Calculadora Python</h2>
+<p>
+Calculadora com adição, subtração, multiplicação e divisão, incluindo validação e tratamento de divisão por zero.
+</p>
+<a href="calculadora.html" class="botao">Testar calculadora</a>
+</div>
+
+<div class="card">
+<h2>📦 Controle de Validade</h2>
+<p>
+Cadastro de produtos com identificação de itens vencidos, válidos e próximos do vencimento.
+</p>
+<a href="controle-validade.html" class="botao">Testar controle</a>
+</div>
+
+</div>
+</section>
+
 </main>
 
 <script src="aprendendo.js"></script>

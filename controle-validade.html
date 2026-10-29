@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Validade | Jadson de Souza</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Jadson de Souza</div>
+        <nav>
+            <a href="index.html">Sobre Mim</a>
+            <a href="formacao.html">Formação</a>
+            <a href="Portfólio.html">Portfólio</a>
+            <a href="contato.html">Contato</a>
+        </nav>
+        <button id="temaBtn" type="button">🌙 Tema</button>
+    </header>
+
+    <main>
+        <h1>Controle de Validade</h1>
+        <p>Cadastre produtos e acompanhe quais estão válidos, vencidos ou próximos do vencimento.</p>
+
+        <section class="card project-panel" aria-labelledby="cadastroProdutoTitulo">
+            <h2 id="cadastroProdutoTitulo">Cadastrar produto</h2>
+            <form id="produtoForm" class="tool-form">
+                <label for="nomeProduto">Nome do produto</label>
+                <input id="nomeProduto" name="nomeProduto" type="text" maxlength="80" placeholder="Ex.: Leite" required>
+
+                <label for="dataValidade">Data de validade</label>
+                <input id="dataValidade" name="dataValidade" type="date" required>
+
+                <button type="submit">Adicionar produto</button>
+            </form>
+            <p id="mensagemValidade" class="tool-result" aria-live="polite"></p>
+        </section>
+
+        <section class="card project-panel" aria-labelledby="listaProdutosTitulo">
+            <h2 id="listaProdutosTitulo">Produtos cadastrados</h2>
+            <p id="listaVazia">Nenhum produto cadastrado ainda.</p>
+            <ul id="listaProdutos" class="product-list"></ul>
+        </section>
+
+        <p class="project-note">Os produtos ficam nesta página enquanto ela estiver aberta. A lógica original do projeto foi desenvolvida em Python.</p>
+    </main>
+
+    <script src="aprendendo.js"></script>
+    <script>
+        const produtoForm = document.getElementById("produtoForm");
+        const listaProdutos = document.getElementById("listaProdutos");
+        const listaVazia = document.getElementById("listaVazia");
+        const mensagemValidade = document.getElementById("mensagemValidade");
+        const produtos = [];
+        const umDiaEmMs = 24 * 60 * 60 * 1000;
+
+        function dataLocalComoUtc(data) {
+            const [ano, mes, dia] = data.split("-").map(Number);
+            return Date.UTC(ano, mes - 1, dia);
+        }
+
+        function statusValidade(validade, hoje) {
+            if (validade < hoje) return "Vencido";
+            if (validade === hoje) return "Vence hoje";
+            if (dataLocalComoUtc(validade) - dataLocalComoUtc(hoje) <= 30 * umDiaEmMs) {
+                return "Vence em breve";
+            }
+            return "Válido";
+        }
+
+        function renderizarProdutos() {
+            listaProdutos.replaceChildren();
+            listaVazia.hidden = produtos.length > 0;
+            const agora = new Date();
+            const hoje = [
+                agora.getFullYear(),
+                String(agora.getMonth() + 1).padStart(2, "0"),
+                String(agora.getDate()).padStart(2, "0")
+            ].join("-");
+
+            for (const produto of produtos) {
+                const item = document.createElement("li");
+                const nome = document.createElement("span");
+                const validade = document.createElement("span");
+                const status = document.createElement("strong");
+                const estado = statusValidade(produto.validade, hoje);
+
+                nome.textContent = produto.nome;
+                validade.textContent = new Date(`${produto.validade}T00:00:00`).toLocaleDateString("pt-BR");
+                status.textContent = estado;
+                status.className = `validity-status ${estado === "Vencido" ? "is-expired" : estado === "Válido" ? "is-valid" : "is-warning"}`;
+
+                item.append(nome, validade, status);
+                listaProdutos.append(item);
+            }
+        }
+
+        produtoForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const nome = document.getElementById("nomeProduto").value.trim();
+            const validade = document.getElementById("dataValidade").value;
+
+            if (!nome || !validade || Number.isNaN(dataLocalComoUtc(validade))) {
+                mensagemValidade.textContent = "Informe o nome do produto e uma data válida.";
+                mensagemValidade.classList.add("is-error");
+                return;
+            }
+
+            produtos.push({ nome, validade });
+            renderizarProdutos();
+            mensagemValidade.textContent = "Produto adicionado com sucesso.";
+            mensagemValidade.classList.remove("is-error");
+            produtoForm.reset();
+            document.getElementById("nomeProduto").focus();
+        });
+    </script>
+</body>
+</html>

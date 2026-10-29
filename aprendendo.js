@@ -52,7 +52,7 @@ if(!regex.test(email)){
 
 const dados = new FormData(formulario);
 
-fetch("../../php/enviar_contato.php", {
+fetch("../php/enviar_contato.php", {
   method: "POST",
   body: dados
 })

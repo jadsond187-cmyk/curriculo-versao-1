@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiro Site | Jadson de Souza</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+
+<div class="logo">
+🦉 Jadson de Souza
+</div>
+
+<nav>
+<a href="index.html">Sobre Mim</a>
+<a href="formacao.html">Formação</a>
+<a href="Portfólio.html">Portfólio</a>
+<a href="contato.html">Contato</a>
+</nav>
+
+<button id="temaBtn">
+🌙 Tema
+</button>
+
+</header>
+<main>
+    <h1>Bloco de Notas</h1>
+    <p>Escreva suas anotações e salve-as neste navegador.</p>
+
+    <section class="card project-panel">
+        <form id="blocoNotasForm" class="tool-form">
+            <label for="anotacao">Sua anotação</label>
+            <textarea id="anotacao" name="anotacao" class="note-editor" placeholder="Digite sua anotação aqui..." aria-describedby="statusAnotacao"></textarea>
+            <div class="tool-actions">
+                <button type="submit">Salvar anotação</button>
+                <button id="apagarAnotacao" class="button-secondary" type="button">Apagar anotação</button>
+            </div>
+        </form>
+        <p id="statusAnotacao" class="tool-result" aria-live="polite">A anotação fica salva somente neste navegador.</p>
+    </section>
+
+    <section class="card project-panel">
+        <h2>Projeto de cadastro</h2>
+        <p>Conheça também o sistema de cadastro desenvolvido com Node.js, Express e MySQL.</p>
+        <a href="cadastro.html" class="botao">Abrir projeto de cadastro</a>
+        <p class="project-note">O envio de dados requer o servidor Node.js e a conexão MySQL configurados.</p>
+    </section>
+</main>
+<script src="aprendendo.js"></script>
+<script>
+    const blocoNotasForm = document.getElementById("blocoNotasForm");
+    const anotacao = document.getElementById("anotacao");
+    const statusAnotacao = document.getElementById("statusAnotacao");
+    const chaveAnotacao = "primeiroSiteAnotacao";
+
+    try {
+        anotacao.value = localStorage.getItem(chaveAnotacao) || "";
+    } catch (erro) {
+        statusAnotacao.textContent = "Não foi possível acessar o armazenamento deste navegador.";
+        statusAnotacao.classList.add("is-error");
+    }
+
+    blocoNotasForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        try {
+            localStorage.setItem(chaveAnotacao, anotacao.value);
+            statusAnotacao.textContent = "Anotação salva neste navegador.";
+            statusAnotacao.classList.remove("is-error");
+        } catch (erro) {
+            statusAnotacao.textContent = "Não foi possível salvar. Verifique o espaço disponível no navegador.";
+            statusAnotacao.classList.add("is-error");
+        }
+    });
+
+    document.getElementById("apagarAnotacao").addEventListener("click", () => {
+        try {
+            localStorage.removeItem(chaveAnotacao);
+            anotacao.value = "";
+            statusAnotacao.textContent = "Anotação apagada.";
+            statusAnotacao.classList.remove("is-error");
+            anotacao.focus();
+        } catch (erro) {
+            statusAnotacao.textContent = "Não foi possível apagar a anotação do armazenamento.";
+            statusAnotacao.classList.add("is-error");
+        }
+    });
+</script>
+</body>
+</html>

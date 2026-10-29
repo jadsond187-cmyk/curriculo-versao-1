@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora | Jadson de Souza</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">Jadson de Souza</div>
+        <nav>
+            <a href="index.html">Sobre Mim</a>
+            <a href="formacao.html">Formação</a>
+            <a href="Portfólio.html">Portfólio</a>
+            <a href="contato.html">Contato</a>
+        </nav>
+        <button id="temaBtn" type="button">🌙 Tema</button>
+    </header>
+
+    <main>
+        <h1>Calculadora</h1>
+        <p>Uma demonstração das operações matemáticas básicas, com validação dos valores e tratamento de divisão por zero.</p>
+
+        <section class="card project-panel" aria-labelledby="calculadoraTitulo">
+            <h2 id="calculadoraTitulo">Faça um cálculo</h2>
+            <form id="calculadoraForm" class="tool-form">
+                <label for="valorA">Primeiro número</label>
+                <input id="valorA" name="valorA" type="number" step="any" inputmode="decimal" required>
+
+                <label for="operacao">Operação</label>
+                <select id="operacao" name="operacao">
+                    <option value="somar">Adição (+)</option>
+                    <option value="subtrair">Subtração (−)</option>
+                    <option value="multiplicar">Multiplicação (×)</option>
+                    <option value="dividir">Divisão (÷)</option>
+                </select>
+
+                <label for="valorB">Segundo número</label>
+                <input id="valorB" name="valorB" type="number" step="any" inputmode="decimal" required>
+
+                <div class="tool-actions">
+                    <button type="submit">Calcular</button>
+                    <button id="limparCalculadora" class="button-secondary" type="reset">Limpar</button>
+                </div>
+            </form>
+            <p id="resultadoCalculadora" class="tool-result" aria-live="polite">O resultado aparecerá aqui.</p>
+        </section>
+
+        <p class="project-note">Projeto de lógica desenvolvido em Python; esta página permite testar as operações diretamente no navegador.</p>
+    </main>
+
+    <script src="aprendendo.js"></script>
+    <script>
+        const calculadoraForm = document.getElementById("calculadoraForm");
+        const resultadoCalculadora = document.getElementById("resultadoCalculadora");
+        const formatarNumero = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 10 });
+
+        calculadoraForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const primeiro = document.getElementById("valorA").valueAsNumber;
+            const segundo = document.getElementById("valorB").valueAsNumber;
+            const operacao = document.getElementById("operacao").value;
+
+            if (!Number.isFinite(primeiro) || !Number.isFinite(segundo)) {
+                resultadoCalculadora.textContent = "Informe dois números válidos.";
+                resultadoCalculadora.classList.add("is-error");
+                return;
+            }
+
+            let resultado;
+            if (operacao === "somar") resultado = primeiro + segundo;
+            if (operacao === "subtrair") resultado = primeiro - segundo;
+            if (operacao === "multiplicar") resultado = primeiro * segundo;
+            if (operacao === "dividir") {
+                if (segundo === 0) {
+                    resultadoCalculadora.textContent = "Não é possível dividir por zero.";
+                    resultadoCalculadora.classList.add("is-error");
+                    return;
+                }
+                resultado = primeiro / segundo;
+            }
+
+            if (!Number.isFinite(resultado)) {
+                resultadoCalculadora.textContent = "O resultado ultrapassa o limite numérico.";
+                resultadoCalculadora.classList.add("is-error");
+                return;
+            }
+
+            resultadoCalculadora.textContent = `Resultado: ${formatarNumero.format(Object.is(resultado, -0) ? 0 : resultado)}`;
+            resultadoCalculadora.classList.remove("is-error");
+        });
+
+        calculadoraForm.addEventListener("reset", () => {
+            resultadoCalculadora.textContent = "O resultado aparecerá aqui.";
+            resultadoCalculadora.classList.remove("is-error");
+        });
+    </script>
+</body>
+</html>

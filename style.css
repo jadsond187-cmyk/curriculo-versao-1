@@ -138,8 +138,155 @@ ul {
   min-width: 0;
 }
 
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 20px;
+}
+
+.project-group {
+  margin-bottom: 28px;
+}
+
+.project-group > h2 {
+  margin-bottom: 14px;
+}
+
+.project-grid .card {
+  margin-bottom: 0;
+}
+
+.project-note {
+  margin-top: 12px;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.project-panel {
+  max-width: 760px;
+}
+
+.note-editor {
+  min-height: 320px;
+  line-height: 1.6;
+}
+
+.tool-form {
+  display: grid;
+  gap: 10px;
+}
+
+.tool-form label {
+  font-weight: 600;
+}
+
+.tool-form select {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #1f2937;
+  font: inherit;
+}
+
+.tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tool-form button {
+  background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%);
+  color: white;
+}
+
+.tool-form .button-secondary {
+  background: #e2e8f0;
+  color: #1f2937;
+}
+
+.tool-result {
+  min-height: 1.7em;
+  margin-top: 16px;
+  font-weight: 600;
+}
+
+.is-error {
+  color: #b91c1c;
+}
+
+.product-list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  list-style: none;
+}
+
+.product-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.validity-status {
+  white-space: nowrap;
+}
+
+.is-expired {
+  color: #b91c1c;
+}
+
+.is-valid {
+  color: #15803d;
+}
+
+.is-warning {
+  color: #a16207;
+}
+
 body.dark .card {
   background: #1f2937;
+}
+
+body.dark .project-note {
+  color: #d1d5db;
+}
+
+body.dark .tool-form select {
+  border-color: #4b5563;
+  background: #374151;
+  color: #f9fafb;
+}
+
+body.dark .tool-form .button-secondary {
+  background: #4b5563;
+  color: #f9fafb;
+}
+
+body.dark .product-list li {
+  background: #374151;
+}
+
+body.dark .is-error {
+  color: #fca5a5;
+}
+
+body.dark .is-expired {
+  color: #fca5a5;
+}
+
+body.dark .is-valid {
+  color: #86efac;
+}
+
+body.dark .is-warning {
+  color: #fcd34d;
 }
 
 .botao {
@@ -217,6 +364,11 @@ textarea {
   border: 1px solid #cbd5e1;
   border-radius: 8px;
   font-size: 16px;
+}
+
+select:focus-visible {
+  outline: 3px solid #f59e0b;
+  outline-offset: 3px;
 }
 
 textarea {
@@ -305,6 +457,11 @@ textarea:focus-visible {
 
   .contact-card {
     padding: 16px;
+  }
+
+  .product-list li {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 }
 
